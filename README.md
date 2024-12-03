@@ -1,29 +1,40 @@
-# Create T3 App
+# T3 Reddit Clone - MVP
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-## What's next? How do I make an app with this?
+## Installation
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Install the packages:
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+```bash
+  npm install
+```
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Set up a local PostgreSQL database with a new user:
 
-## Learn More
+```sql
+CREATE DATABASE t3_reddit;
+CREATE USER t3_reddit_user WITH PASSWORD 'password' CREATEDB;
+GRANT ALL PRIVILEGES ON DATABASE t3_reddit TO t3_reddit_user;
+\c t3_reddit
+ALTER SCHEMA public OWNER TO t3_reddit_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO t3_reddit_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO t3_reddit_user;
+```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+Create a `.env` file based on `.env.example` and fill in the values, including the local `DATABASE_URL`.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Prisma
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+Create a new migration after changing the Prisma schema.
+This will generate a new migration file in the `prisma/migrations` directory based on the changes in the schema file `prisma/schema.prisma` and update the database with the new model definitions. In production, the migration is automatically created and applied when a change is pushed to the `main` branch.
 
-## How do I deploy this?
+```bash
+npx prisma migrate dev --name <migration-name>
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Launch the Prisma Studio to view the data in the database.
+
+```bash
+npx prisma studio
+```
