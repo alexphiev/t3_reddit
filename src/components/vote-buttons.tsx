@@ -56,7 +56,7 @@ export function VoteButtons({ userId, id, type }: VoteButtonsProps) {
 
   return (
     <div
-      className={`flex ${type === 'comment' ? 'flex-row gap-3 px-0 py-2' : 'flex-col gap-3 px-2 py-4'} items-center`}
+      className={`flex items-center gap-3 px-0 ${type === 'comment' ? 'flex-row py-2' : 'flex-col py-4'}`}
     >
       <Button
         size="icon"
