@@ -43,4 +43,21 @@ export const postRouter = createTRPCRouter({
         orderBy: { updatedAt: 'desc' },
       })
     }),
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.post.findUnique({
+        where: { id: input.id },
+        include: {
+          author: true,
+          votes: true,
+          comments: {
+            include: {
+              votes: true,
+              author: true,
+            },
+          },
+        },
+      })
+    }),
 })

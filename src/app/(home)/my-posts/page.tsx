@@ -10,7 +10,7 @@ export default async function MyPosts() {
 
   return (
     <HydrateClient>
-      <PostList posts={posts} />
+      <PostList posts={posts} previousUrl={'/my-posts'} />
     </HydrateClient>
   )
 }
