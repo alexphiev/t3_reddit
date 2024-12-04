@@ -3,9 +3,11 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { currentUser } from '@clerk/nextjs/server'
 import { type Prisma } from '@prisma/client'
 import { format } from 'timeago.js'
-import { VoteButtons } from './VoteButtons'
+import { VoteButtons } from './vote-buttons'
 import Link from 'next/link'
 import { Separator } from '@/components/ui/separator'
+import { PostForm } from './post-form'
+import { SignedIn } from '@clerk/nextjs'
 
 interface PostListProps {
   posts: Prisma.PostGetPayload<{ include: { author: true } }>[]
@@ -17,6 +19,9 @@ export async function PostList({ posts }: PostListProps) {
   return (
     <div className="flex w-full justify-center">
       <div className="mx-auto max-w-3xl p-4 md:p-8">
+        <SignedIn>
+          {user && <PostForm userId={user.id} userImageUrl={user.imageUrl} />}
+        </SignedIn>
         {posts?.map((post, index) => {
           const { id, author, createdAt, title, content } = post
           return (

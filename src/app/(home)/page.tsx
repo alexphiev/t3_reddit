@@ -1,4 +1,4 @@
-import { PostList } from '@/components/PostList'
+import { PostList } from '@/components/post-list'
 import { api, HydrateClient } from '@/trpc/server'
 
 export const dynamic = 'force-dynamic'
