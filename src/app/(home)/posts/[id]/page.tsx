@@ -11,16 +11,14 @@ import { type ClientUser } from '@/types/user.types'
 import { Separator } from '@/components/ui/separator'
 
 interface PageProps {
-  params: {
-    id: string
-  }
-  searchParams: {
-    previousUrl?: string
-  }
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ previousUrl?: string }>
 }
 
 export default async function PostPage({ params, searchParams }: PageProps) {
   const user = await currentUser()
+  const id = (await params).id
+  const previousUrl = (await searchParams).previousUrl
   const clientUser: ClientUser | null = user
     ? {
         id: user.id,
@@ -29,19 +27,18 @@ export default async function PostPage({ params, searchParams }: PageProps) {
         lastName: user.lastName ?? '',
       }
     : null
-  const post = await api.post.getById({ id: params.id })
+  const post = await api.post.getById({ id })
 
   if (!post) {
     notFound()
   }
 
-  const { author, comments, createdAt, title, content, votes } = post
-  const organizedComments = organizeComments(comments)
+  const organizedComments = organizeComments(post.comments)
 
   return (
     <div className="mx-auto w-full">
       <Link
-        href={searchParams.previousUrl ?? '/'}
+        href={previousUrl ?? '/'}
         className="mb-4 flex items-center gap-2 text-muted-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -51,7 +48,7 @@ export default async function PostPage({ params, searchParams }: PageProps) {
       <PostCard post={post} userId={user?.id} />
 
       <div className="pt-4">
-        <CommentForm user={clientUser} postId={params.id} />
+        <CommentForm user={clientUser} postId={id} />
 
         <h2 className="mt-4 text-lg font-semibold">
           {organizedComments.length === 0 ? 'No comments yet' : 'All comments'}
@@ -63,7 +60,7 @@ export default async function PostPage({ params, searchParams }: PageProps) {
                 key={comment.id}
                 comment={comment}
                 user={clientUser}
-                postId={params.id}
+                postId={id}
               />
               <Separator orientation="horizontal" className="mb-2" />
             </div>
