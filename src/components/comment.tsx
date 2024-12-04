@@ -10,6 +10,7 @@ import { MessageSquare } from 'lucide-react'
 import { useState } from 'react'
 import { format } from 'timeago.js'
 import { VoteButtons } from './vote-buttons'
+import { SignedIn } from '@clerk/nextjs'
 
 interface CommentProps {
   comment: CommentWithReplies
@@ -54,26 +55,30 @@ export function Comment({ comment, user, postId, level = 0 }: CommentProps) {
               id={id}
               type="comment"
             />
-            <Button
-              variant="ghost"
-              size="default"
-              onClick={() => setShowReplyForm(!showReplyForm)}
-            >
-              <MessageSquare className="mr-1 h-4 w-4" />
-              Reply
-            </Button>
+            <SignedIn>
+              <Button
+                variant="ghost"
+                size="default"
+                onClick={() => setShowReplyForm(!showReplyForm)}
+              >
+                <MessageSquare className="mr-1 h-4 w-4" />
+                Reply
+              </Button>
+            </SignedIn>
           </div>
         </div>
       </div>
 
       {showReplyForm && (
         <div className="">
-          <CommentForm
-            user={user}
-            parentId={comment.id}
-            postId={postId}
-            onComment={() => setShowReplyForm(false)}
-          />
+          <SignedIn>
+            <CommentForm
+              user={user}
+              parentId={comment.id}
+              postId={postId}
+              onComment={() => setShowReplyForm(false)}
+            />
+          </SignedIn>
         </div>
       )}
 

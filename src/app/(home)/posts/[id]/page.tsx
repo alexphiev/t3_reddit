@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { type ClientUser } from '@/types/user.types'
 import { Separator } from '@/components/ui/separator'
+import { SignedIn } from '@clerk/nextjs'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -48,7 +49,9 @@ export default async function PostPage({ params, searchParams }: PageProps) {
       <PostCard post={post} userId={user?.id} />
 
       <div className="pt-4">
-        <CommentForm user={clientUser} postId={id} />
+        <SignedIn>
+          <CommentForm user={clientUser} postId={id} />
+        </SignedIn>
         <Separator orientation="horizontal" className="my-8" />
 
         <h2 className="mt-4 text-sm font-medium">
