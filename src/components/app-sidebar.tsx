@@ -28,7 +28,7 @@ import { LogOut } from 'lucide-react'
 export function AppSidebar() {
   const pathname = usePathname()
   const { user } = useUser()
-  const fullName = `${user?.firstName} ${user?.lastName}`
+  const fullName = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`
 
   return (
     <Sidebar>
