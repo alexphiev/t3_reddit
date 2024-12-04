@@ -12,6 +12,7 @@ model User {
     username     String        @unique @db.VarChar(255)
     firstName    String?
     lastName     String?
+    imageUrl     String?
     posts        Post[]
     comments     Comment[]
     postVotes    PostVote[]

@@ -1,9 +1,13 @@
 import { z } from 'zod'
 
-import { createTRPCRouter, publicProcedure } from '@/server/api/trpc'
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from '@/server/api/trpc'
 
 export const postRouter = createTRPCRouter({
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         authorId: z.string().min(1),
@@ -20,14 +24,6 @@ export const postRouter = createTRPCRouter({
         },
       })
     }),
-
-  getLatest: publicProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.post.findFirst({
-      orderBy: { createdAt: 'desc' },
-    })
-
-    return post ?? null
-  }),
   getAll: publicProcedure.query(async ({ ctx }) => {
     return ctx.db.post.findMany({
       orderBy: { updatedAt: 'desc' },

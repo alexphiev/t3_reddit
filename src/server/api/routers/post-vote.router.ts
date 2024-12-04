@@ -1,9 +1,13 @@
 import { z } from 'zod'
 
-import { createTRPCRouter, publicProcedure } from '@/server/api/trpc'
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from '@/server/api/trpc'
 
 export const postVoteRouter = createTRPCRouter({
-  upvote: publicProcedure
+  upvote: protectedProcedure
     .input(
       z.object({
         userId: z.string(),
@@ -54,7 +58,7 @@ export const postVoteRouter = createTRPCRouter({
       return { action: 'added' }
     }),
 
-  downvote: publicProcedure
+  downvote: protectedProcedure
     .input(
       z.object({
         userId: z.string(),

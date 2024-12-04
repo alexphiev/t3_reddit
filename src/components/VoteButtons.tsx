@@ -1,9 +1,8 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
+import { ChevronsDown, ChevronsUp } from 'lucide-react'
 
 import { api } from '@/trpc/react'
-import { ChevronUp } from 'lucide-react'
 import { Button } from './ui/button'
 
 interface VoteButtonsProps {
@@ -52,11 +51,13 @@ export function VoteButtons({ userId, postId }: VoteButtonsProps) {
           }
         }}
       >
-        <ChevronUp className="h-5 w-5" strokeWidth={hasVotedUp ? 5 : 2} />
+        <ChevronsUp className="h-5 w-5" strokeWidth={hasVotedUp ? 3 : 1} />
       </Button>
-      <span className="py-1 text-sm font-medium">
+
+      <span className="py-0.5 text-base font-medium">
         {isLoading ? '...' : count}
       </span>
+
       <Button
         size="icon"
         variant={'ghost'}
@@ -68,7 +69,7 @@ export function VoteButtons({ userId, postId }: VoteButtonsProps) {
           }
         }}
       >
-        <ChevronDown className="h-5 w-5" strokeWidth={hasVotedDown ? 5 : 2} />
+        <ChevronsDown className="h-5 w-5" strokeWidth={hasVotedDown ? 3 : 1} />
       </Button>
     </div>
   )

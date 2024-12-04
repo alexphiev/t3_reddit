@@ -1,7 +1,6 @@
 import { postRouter } from '@/server/api/routers/post.router'
 import { postVoteRouter } from '@/server/api/routers/post-vote.router'
 import { createCallerFactory, createTRPCRouter } from '@/server/api/trpc'
-import { userRouter } from './routers/user.router'
 
 /**
  * This is the primary router for your server.
@@ -10,7 +9,6 @@ import { userRouter } from './routers/user.router'
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
-  user: userRouter,
   postVote: postVoteRouter,
 })
 

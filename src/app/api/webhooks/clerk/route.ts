@@ -52,12 +52,12 @@ export async function POST(req: Request) {
   const { id } = evt.data
   const eventType = evt.type
   console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
-  console.log('Webhook payload:', JSON.stringify(payload, null, 2))
 
   switch (eventType) {
     case 'user.created':
       try {
-        const { first_name, last_name, email_addresses, id } = evt.data
+        const { first_name, last_name, email_addresses, id, image_url } =
+          evt.data
 
         if (!email_addresses?.[0]) {
           throw new Error('Incomplete user data: No email addresses found')
@@ -69,6 +69,7 @@ export async function POST(req: Request) {
             id: id,
             firstName: first_name,
             lastName: last_name,
+            imageUrl: image_url,
             username: email_addresses[0].email_address,
           },
         })
