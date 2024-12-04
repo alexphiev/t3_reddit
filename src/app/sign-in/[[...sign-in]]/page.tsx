@@ -10,7 +10,13 @@ export default function Page() {
         height: '100vh',
       }}
     >
-      <SignIn />
+      <SignIn
+        appearance={{
+          elements: {
+            cardBox: 'w-22rem',
+          },
+        }}
+      />
     </div>
   )
 }

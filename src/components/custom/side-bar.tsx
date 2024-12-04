@@ -109,9 +109,16 @@ export function AppSidebar() {
                   sideOffset={4}
                 >
                   <DropdownMenuGroup>
-                    <SidebarMenuButton>
-                      <User />
-                      Account
+                    <SidebarMenuButton asChild>
+                      <Link
+                        className={
+                          pathname === '/user-profile' ? 'text-primary' : ''
+                        }
+                        href="/user-profile"
+                      >
+                        <User />
+                        Account
+                      </Link>
                     </SidebarMenuButton>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
