@@ -39,22 +39,23 @@ export default async function PostPage({ params, searchParams }: PageProps) {
     <div className="mx-auto w-full">
       <Link
         href={previousUrl ?? '/'}
-        className="mb-4 flex items-center gap-2 text-muted-foreground"
+        className="mb-4 flex items-center gap-2 text-sm text-muted-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
-        Back
+        {previousUrl === '/my-posts' ? 'Back to my posts' : 'Back to posts'}
       </Link>
 
       <PostCard post={post} userId={user?.id} />
 
       <div className="pt-4">
         <CommentForm user={clientUser} postId={id} />
+        <Separator orientation="horizontal" className="my-8" />
 
-        <h2 className="mt-4 text-lg font-semibold">
+        <h2 className="mt-4 text-sm font-medium">
           {organizedComments.length === 0 ? 'No comments yet' : 'All comments'}
         </h2>
         {organizedComments.length > 0 &&
-          organizedComments.map((comment) => (
+          organizedComments.map((comment, index) => (
             <div key={comment.id}>
               <Comment
                 key={comment.id}
@@ -62,7 +63,9 @@ export default async function PostPage({ params, searchParams }: PageProps) {
                 user={clientUser}
                 postId={id}
               />
-              <Separator orientation="horizontal" className="mb-2" />
+              {index !== organizedComments.length - 1 && (
+                <Separator orientation="horizontal" className="mb-2" />
+              )}
             </div>
           ))}
       </div>
